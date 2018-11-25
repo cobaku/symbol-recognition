@@ -24,6 +24,9 @@ public abstract class ImageUtils {
                     }
                 }
 
+                String numberString = i.replace(DatasetGenerator.IMAGE_LOCATION, "");
+                dataset.setNumber(Integer.valueOf(numberString.substring(0, 1)));
+
                 result.add(dataset);
             } catch (Exception e) {
                 throw new RuntimeException(e);
