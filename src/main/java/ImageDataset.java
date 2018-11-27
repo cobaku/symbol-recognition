@@ -7,7 +7,7 @@ public class ImageDataset {
     private List<Integer> data;
 
     public ImageDataset() {
-        this.data = new ArrayList<>(DatasetGenerator.IMAGE_HEIGHT * DatasetGenerator.IMAGE_WIDTH);
+        this.data = new ArrayList<>(ImageRecognition.IMAGE_HEIGHT * ImageRecognition.IMAGE_WIDTH);
     }
 
     public int getNumber() {

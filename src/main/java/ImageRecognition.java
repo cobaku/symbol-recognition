@@ -2,11 +2,14 @@ import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DatasetGenerator {
+public class ImageRecognition {
 
     public static String IMAGE_LOCATION = "/home/cobaku/Iate/ne2/src/main/resources/data/templates/";
     public static int IMAGE_HEIGHT = 10;
     public static int IMAGE_WIDTH = 10;
+
+    public static int OUTPUT_LAYER = 7;
+    public static int INPUT_LAYER = 100;
 
     public static void main(String[] args) {
 
