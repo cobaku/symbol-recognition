@@ -8,9 +8,10 @@ public enum NeuroOut {
     THREE,
     FOUR,
     FIVE,
-    SIX;
+    SIX,
+    CANNOT_RECOGNIZE;
 
-    public NeuroOut getNumberByOut(List<Double> out) {
+    public static NeuroOut getNumberByOut(List<Double> out) {
         return ZERO;
     }
 

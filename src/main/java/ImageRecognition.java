@@ -19,7 +19,9 @@ public class ImageRecognition {
                 .collect(Collectors.toList());
 
         final List<ImageDataset> imageDatasets = ImageUtils.readImages(files, IMAGE_HEIGHT, IMAGE_WIDTH);
-        System.out.println("done");
+
+        final Net net = new Net(INPUT_LAYER, OUTPUT_LAYER);
+        net.observe(imageDatasets);
     }
 
 
