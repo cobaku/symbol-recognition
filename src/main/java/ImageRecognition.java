@@ -1,7 +1,3 @@
-import java.io.File;
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class ImageRecognition {
 
     public static String IMAGE_LOCATION = "/home/cobaku/Iate/ne2/src/main/resources/data/templates/";
@@ -13,7 +9,7 @@ public class ImageRecognition {
 
     public static void main(String[] args) {
 
-        final List<String> files = FileUtils.listFilesForFolder(new File(IMAGE_LOCATION))
+       /* final List<String> files = FileUtils.listFilesForFolder(new File(IMAGE_LOCATION))
                 .stream()
                 .map(v -> IMAGE_LOCATION + v)
                 .collect(Collectors.toList());
@@ -21,8 +17,9 @@ public class ImageRecognition {
         final List<ImageDataset> imageDatasets = ImageUtils.readImages(files, IMAGE_HEIGHT, IMAGE_WIDTH);
 
         final Net net = new Net(INPUT_LAYER, OUTPUT_LAYER);
-        net.observe(imageDatasets);
+        net.observe(imageDatasets);*/
+
+        final Net net = new Net();
+        net.Learn();
     }
-
-
 }
