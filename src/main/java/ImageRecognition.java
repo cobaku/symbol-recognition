@@ -20,6 +20,6 @@ public class ImageRecognition {
         net.observe(imageDatasets);*/
 
         final Net net = new Net();
-        net.Learn();
+        net.train();
     }
 }

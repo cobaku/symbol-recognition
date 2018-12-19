@@ -2,254 +2,54 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Net {
 
-    private static boolean[] symbol_0 = {
-            true, true, true, true, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, true, true, true, true
-    };
+    private static final short HIDDEN_LAYER_NEURONS = 19;
+    private static final short OUTPUT_NEURONS = 4;
+    private static final double TEACH_SPEED = 0.2;
+    private static final short KNOWN_SYMBOLS_COUNT = 16;
+    private static final short INPUT_NEURONS = 35;
 
-    private static boolean[] symbol_1 = {
-            false, false, false, false, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            false, false, false, false, true
-    };
-
-    private static boolean[] symbol_2 = {
-            true, true, true, true, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            true, true, true, true, true,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, true, true, true, true
-    };
-
-    private static boolean[] symbol_3 = {
-            true, true, true, true, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            true, true, true, true, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            true, true, true, true, true
-    };
-
-    private static boolean[] symbol_4 = {
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, true, true, true, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            false, false, false, false, true
-    };
-
-    private static boolean[] symbol_5 = {
-            true, true, true, true, true,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, true, true, true, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            true, true, true, true, true
-    };
-
-    private static boolean[] symbol_6 = {
-            true, true, true, true, true,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, true, true, true, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, true, true, true, true
-    };
-
-    private static boolean[] symbol_7 = {
-            false, true, true, true, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            false, false, false, false, true
-    };
-
-    private static boolean[] symbol_8 = {
-            true, true, true, true, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, true, true, true, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, true, true, true, true
-    };
-
-    private static boolean[] symbol_9 = {
-            true, true, true, true, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, true, true, true, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            true, true, true, true, true
-    };
-
-    private static boolean[] symbol_A = {
-            true, true, true, true, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, true, true, true, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, false, false, true
-    };
-
-    private static boolean[] symbol_B = {
-            true, true, true, true, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, true, true, true, false,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, true, true, true, true
-    };
-
-    private static boolean[] symbol_C = {
-            true, true, true, true, true,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, true, true, true, true
-    };
-
-    private static boolean[] symbol_D = {
-            true, true, true, true, false,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, true, true, true, true
-    };
-
-    private static boolean[] symbol_E = {
-            true, true, true, true, true,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, true, true, true, true,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, true, true, true, true
-    };
-
-    private static boolean[] symbol_F = {
-            true, true, true, true, true,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, true, true, true, true,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, false, false, false, false
-    };
-
-    private static boolean[] symbol_testD = {
-            true, true, true, true, false,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, true, false, false
-    };
-
-    private static boolean[] symbol_testC = {
-            true, true, true, true, true,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, false, true, true, true
-    };
-
-    private static boolean[] symbol_test2 = {
-            true, true, true, true, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            true, true, true, false, true,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, false, true, false, true
-    };
-
-    double Sigmoid(double u) {
+    private double sigmoid(double u) {
         return 1 / (1 + Math.exp(-u));
     }
 
-    /// Обучение
-    public void Learn() {
-
-        // Число скрытых нейронов
-        final short hiddenNeurons = 19;
-
-        // Число выходных нейронов
-        final short outputNeurons = 4;
-
-        // Скорость обучение
-        double teachSpeed = 0.2;
-
-        // Число распознаваемых символов 
-        short symbolNumber = 16;
-
-        // Массив входов
-        final short inputNeurons = 35;
-        boolean[] inputArray = new boolean[inputNeurons];
-
+    public void train() {
+        boolean[] inputArray = new boolean[INPUT_NEURONS];
+        
         // Ожидаемые значения
-        boolean[] expectedOutput = new boolean[outputNeurons];
+        boolean[] expectedOutput = new boolean[OUTPUT_NEURONS];
 
         //Веса входного слоя
-        double[] weight_input = new double[inputNeurons * hiddenNeurons];
+        double[] weight_input = new double[INPUT_NEURONS * HIDDEN_LAYER_NEURONS];
         //Веса скрытого слоя
-        double[] weight_hidden = new double[hiddenNeurons * outputNeurons];
+        double[] weight_hidden = new double[HIDDEN_LAYER_NEURONS * OUTPUT_NEURONS];
 
         int start;
         int end;
         int iterator;
         double sum = 0;
         //Массив выходных нейронов
-        double[] outputArray = new double[outputNeurons];
+        double[] outputArray = new double[OUTPUT_NEURONS];
         //Массив скрытых нейронов
-        double[] hiddenArray = new double[hiddenNeurons];
+        double[] hiddenArray = new double[HIDDEN_LAYER_NEURONS];
         //Ошибка 
-        double[] outputError = new double[outputNeurons];
+        double[] outputError = new double[OUTPUT_NEURONS];
         //Ошибка скрытых нейронов
-        double[] hiddenError = new double[hiddenNeurons];
+        double[] hiddenError = new double[HIDDEN_LAYER_NEURONS];
 
-        for (int i = 0; i < inputNeurons * hiddenNeurons; i++) {
-            weight_input[i] = (double) (ThreadLocalRandom.current().nextInt() % 100) / 100;
+        for (int i = 0; i < INPUT_NEURONS * HIDDEN_LAYER_NEURONS; i++) {
+            weight_input[i] = ThreadLocalRandom.current().nextDouble(-1, 1);
         }
 
-        for (int i = 0; i < outputNeurons * hiddenNeurons; i++) {
-            weight_hidden[i] = (double) (ThreadLocalRandom.current().nextInt() % 100) / 100;
+        for (int i = 0; i < OUTPUT_NEURONS * HIDDEN_LAYER_NEURONS; i++) {
+            weight_hidden[i] = ThreadLocalRandom.current().nextDouble(-1, 1);
         }
 
         for (int i = 0; i < 5000; i++) {
-            for (int n = 0; n < symbolNumber; n++) {
+            for (int n = 0; n < KNOWN_SYMBOLS_COUNT; n++) {
                 switch (n) {
                     case 0: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_0[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_0[s];
                             expectedOutput[0] = false;
                             expectedOutput[1] = false;
                             expectedOutput[2] = false;
@@ -259,8 +59,8 @@ public class Net {
                         break;
                     }
                     case 1: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_1[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_1[s];
                             expectedOutput[0] = false;
                             expectedOutput[1] = false;
                             expectedOutput[2] = false;
@@ -270,8 +70,8 @@ public class Net {
                         break;
                     }
                     case 2: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_2[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_2[s];
                             expectedOutput[0] = false;
                             expectedOutput[1] = false;
                             expectedOutput[2] = true;
@@ -281,8 +81,8 @@ public class Net {
                         break;
                     }
                     case 3: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_3[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_3[s];
                             expectedOutput[0] = false;
                             expectedOutput[1] = false;
                             expectedOutput[2] = true;
@@ -292,8 +92,8 @@ public class Net {
                         break;
                     }
                     case 4: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_4[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_4[s];
                             expectedOutput[0] = false;
                             expectedOutput[1] = true;
                             expectedOutput[2] = false;
@@ -303,8 +103,8 @@ public class Net {
                         break;
                     }
                     case 5: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_5[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_5[s];
                             expectedOutput[0] = false;
                             expectedOutput[1] = true;
                             expectedOutput[2] = false;
@@ -314,8 +114,8 @@ public class Net {
                         break;
                     }
                     case 6: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_6[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_6[s];
                             expectedOutput[0] = false;
                             expectedOutput[1] = true;
                             expectedOutput[2] = true;
@@ -325,8 +125,8 @@ public class Net {
                         break;
                     }
                     case 7: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_7[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_7[s];
                             expectedOutput[0] = false;
                             expectedOutput[1] = true;
                             expectedOutput[2] = true;
@@ -336,8 +136,8 @@ public class Net {
                         break;
                     }
                     case 8: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_8[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_8[s];
                             expectedOutput[0] = true;
                             expectedOutput[1] = false;
                             expectedOutput[2] = false;
@@ -347,8 +147,8 @@ public class Net {
                         break;
                     }
                     case 9: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_9[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_9[s];
                             expectedOutput[0] = true;
                             expectedOutput[1] = false;
                             expectedOutput[2] = false;
@@ -358,8 +158,8 @@ public class Net {
                         break;
                     }
                     case 10: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_A[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_A[s];
                             expectedOutput[0] = true;
                             expectedOutput[1] = false;
                             expectedOutput[2] = true;
@@ -369,8 +169,8 @@ public class Net {
                         break;
                     }
                     case 11: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_B[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_B[s];
                             expectedOutput[0] = true;
                             expectedOutput[1] = false;
                             expectedOutput[2] = true;
@@ -380,8 +180,8 @@ public class Net {
                         break;
                     }
                     case 12: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_C[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_C[s];
                             expectedOutput[0] = true;
                             expectedOutput[1] = true;
                             expectedOutput[2] = false;
@@ -391,8 +191,8 @@ public class Net {
                         break;
                     }
                     case 13: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_D[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_D[s];
                             expectedOutput[0] = true;
                             expectedOutput[1] = true;
                             expectedOutput[2] = false;
@@ -402,8 +202,8 @@ public class Net {
                         break;
                     }
                     case 14: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_E[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_E[s];
                             expectedOutput[0] = true;
                             expectedOutput[1] = true;
                             expectedOutput[2] = true;
@@ -413,8 +213,8 @@ public class Net {
                         break;
                     }
                     case 15: {
-                        for (int s = 0; s < inputNeurons; s++) {
-                            inputArray[s] = symbol_F[s];
+                        for (int s = 0; s < INPUT_NEURONS; s++) {
+                            inputArray[s] = DummyDataset.symbol_F[s];
                             expectedOutput[0] = true;
                             expectedOutput[1] = true;
                             expectedOutput[2] = true;
@@ -427,62 +227,62 @@ public class Net {
 
                 start = 0;
 
-                end = inputNeurons;
+                end = INPUT_NEURONS;
 
-                for (int j = 0; j < hiddenNeurons; j++) {
+                for (int j = 0; j < HIDDEN_LAYER_NEURONS; j++) {
                     for (int k = start; k < end; k++) {
-                        sum += BoolToInt(inputArray[k - start]) * weight_input[k];
+                        sum += boolToInt(inputArray[k - start]) * weight_input[k];
                     }
 
-                    hiddenArray[j] = Sigmoid(sum);
+                    hiddenArray[j] = sigmoid(sum);
 
-                    start += inputNeurons;
-                    end += inputNeurons;
+                    start += INPUT_NEURONS;
+                    end += INPUT_NEURONS;
                     sum = 0;
                     hiddenError[j] = 0;
                 }
 
                 start = 0;
-                end = hiddenNeurons;
+                end = HIDDEN_LAYER_NEURONS;
 
-                for (int j = 0; j < outputNeurons; j++) {
+                for (int j = 0; j < OUTPUT_NEURONS; j++) {
                     for (int k = start; k < end; k++) {
                         sum += hiddenArray[k - start] * weight_hidden[k];
                     }
 
-                    outputArray[j] = Sigmoid(sum);
-                    outputError[j] = BoolToInt(expectedOutput[j]) - outputArray[j];
+                    outputArray[j] = sigmoid(sum);
+                    outputError[j] = boolToInt(expectedOutput[j]) - outputArray[j];
                     for (int k = start; k < end; k++) {
-                        weight_hidden[k] += teachSpeed * outputError[j] * hiddenArray[k - start] * (1 - Sigmoid(sum)) *
-                                Sigmoid(sum);
+                        weight_hidden[k] += TEACH_SPEED * outputError[j] * hiddenArray[k - start] * (1 - sigmoid(sum)) *
+                                sigmoid(sum);
                     }
 
-                    start += hiddenNeurons;
-                    end += hiddenNeurons;
+                    start += HIDDEN_LAYER_NEURONS;
+                    end += HIDDEN_LAYER_NEURONS;
                     sum = 0;
                 }
 
                 start = 0;
-                end = inputNeurons;
+                end = INPUT_NEURONS;
 
-                for (int j = 0; j < hiddenNeurons; j++) {
+                for (int j = 0; j < HIDDEN_LAYER_NEURONS; j++) {
                     for (int k = start; k < end; k++) {
-                        sum += BoolToInt(inputArray[k - start]) * weight_input[k];
+                        sum += boolToInt(inputArray[k - start]) * weight_input[k];
                     }
 
                     iterator = j;
 
-                    for (int k = 0; k < outputNeurons; k++) {
+                    for (int k = 0; k < OUTPUT_NEURONS; k++) {
                         hiddenError[j] += outputError[k] * weight_hidden[iterator];
-                        iterator += hiddenNeurons;
+                        iterator += HIDDEN_LAYER_NEURONS;
                     }
 
                     for (int k = start; k < end; k++) {
-                        weight_input[k] += teachSpeed * hiddenError[j] * BoolToInt(inputArray[k - start]) * (1 - Sigmoid(sum)) * Sigmoid(sum);
+                        weight_input[k] += TEACH_SPEED * hiddenError[j] * boolToInt(inputArray[k - start]) * (1 - sigmoid(sum)) * sigmoid(sum);
                     }
 
-                    start += inputNeurons;
-                    end += inputNeurons;
+                    start += INPUT_NEURONS;
+                    end += INPUT_NEURONS;
                     sum = 0;
                 }
             }
@@ -490,46 +290,44 @@ public class Net {
 
         System.out.print("Обучение завершено. Введите символ. \n");
 
-        for (int j = 0; j < inputNeurons; j++) {
-            //////symbol_testD
-            /// symbol_testC
-            /// symbol_test2
-            inputArray[j] = symbol_testC[j];
+        for (int j = 0; j < INPUT_NEURONS; j++) {
+            //todo set value
+            inputArray[j] = DummyDataset.symbol_9[j];
         }
 
         start = 0;
-        end = inputNeurons;
+        end = INPUT_NEURONS;
 
-        for (int j = 0; j < hiddenNeurons; j++) {
+        for (int j = 0; j < HIDDEN_LAYER_NEURONS; j++) {
             for (int k = start; k < end; k++) {
-                sum += BoolToInt(inputArray[k - start]) * weight_input[k];
+                sum += boolToInt(inputArray[k - start]) * weight_input[k];
             }
 
-            hiddenArray[j] = Sigmoid(sum);
-            start += inputNeurons;
-            end += inputNeurons;
+            hiddenArray[j] = sigmoid(sum);
+            start += INPUT_NEURONS;
+            end += INPUT_NEURONS;
             sum = 0;
         }
 
         start = 0;
-        end = hiddenNeurons;
+        end = HIDDEN_LAYER_NEURONS;
 
-        for (int j = 0; j < outputNeurons; j++) {
+        for (int j = 0; j < OUTPUT_NEURONS; j++) {
             for (int k = start; k < end; k++) {
                 sum += hiddenArray[k - start] * weight_hidden[k];
             }
 
-            outputArray[j] = Sigmoid(sum);
-            start += hiddenNeurons;
-            end += hiddenNeurons;
+            outputArray[j] = sigmoid(sum);
+            start += HIDDEN_LAYER_NEURONS;
+            end += HIDDEN_LAYER_NEURONS;
             sum = 0;
         }
 
-        InputSymbol(inputNeurons, inputArray);
-        OutputSymbol(outputNeurons, outputArray);
+        inputSymbol(INPUT_NEURONS, inputArray);
+        outputSymbol(OUTPUT_NEURONS, outputArray);
     }
 
-    private static void OutputSymbol(short outputNeurons, double[] output) {
+    private static void outputSymbol(short outputNeurons, double[] output) {
         System.out.print("\nЗначения на выходных нейронах: \n");
         for (int j = 0; j < outputNeurons; j++) {
             System.out.print(output[j] + " ");
@@ -592,7 +390,7 @@ public class Net {
         }
     }
 
-    private static void InputSymbol(short inputNeurons, boolean[] input) {
+    private static void inputSymbol(short inputNeurons, boolean[] input) {
         System.out.print("Введенный символ:");
         for (int j = 0; j < inputNeurons; j++) {
             if (j % 5 == 0) System.out.print("");
@@ -603,7 +401,7 @@ public class Net {
         }
     }
 
-    private static int BoolToInt(boolean boolVariable) {
+    private static int boolToInt(boolean boolVariable) {
         return boolVariable ? 1 : 0;
     }
 }
