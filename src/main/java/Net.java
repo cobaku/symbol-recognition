@@ -209,6 +209,6 @@ public class Net {
     }
 
     public void printTotalError() {
-        System.out.printf("Средняя ошибка = %s \n", totalError.stream().mapToDouble(Double::doubleValue).average().orElse(0));
+        System.out.printf("Средняя точность = %s \n", 1 - totalError.stream().mapToDouble(Double::doubleValue).average().orElse(0));
     }
 }
