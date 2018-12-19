@@ -1,8 +1,10 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Net {
 
-    private static final int HIDDEN_LAYER_NEURONS = 19;
+    private static final int HIDDEN_LAYER_NEURONS = 198;
     private static final int OUTPUT_NEURONS = DummyDataset.DATASET.size();
     private static final double TEACH_SPEED = 0.2;
     private static final int INPUT_NEURONS = 35;
@@ -24,6 +26,8 @@ public class Net {
     private static final double[] outputError = new double[OUTPUT_NEURONS];
     //Ошибка скрытых нейронов
     private static final double[] hiddenError = new double[HIDDEN_LAYER_NEURONS];
+
+    private static final List<Double> totalError = new ArrayList<>();
 
     public Net() {
         for (int i = 0; i < INPUT_NEURONS * HIDDEN_LAYER_NEURONS; i++) {
@@ -123,7 +127,9 @@ public class Net {
     }
 
     public DummyDataset.SymbolName predictSymbol(boolean[] input) {
-        return outputSymbol(predict(input));
+        final double[] predict = predict(input);
+        totalError.add(predict[findMaximumIndexInArray(predict)]);
+        return outputSymbol(predict);
     }
 
     private double[] predict(boolean[] input) {
@@ -200,5 +206,9 @@ public class Net {
         }
 
         return maxAt;
+    }
+
+    public void printTotalError() {
+        System.out.printf("Средняя ошибка = %s \n", totalError.stream().mapToDouble(Double::doubleValue).average().orElse(0));
     }
 }

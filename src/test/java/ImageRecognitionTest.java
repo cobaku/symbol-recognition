@@ -20,5 +20,7 @@ public class ImageRecognitionTest {
         assertEquals(net.predictSymbol(DummyDataset.C), DummyDataset.SymbolName.C);
         assertEquals(net.predictSymbol(DummyDataset.D), DummyDataset.SymbolName.D);
         assertEquals(net.predictSymbol(DummyDataset.E), DummyDataset.SymbolName.E);
+
+        net.printTotalError();
     }
 }
