@@ -8,33 +8,33 @@ public class Net {
     private static final short KNOWN_SYMBOLS_COUNT = 16;
     private static final short INPUT_NEURONS = 35;
 
+    // Значения на входе
+    private boolean[] inputArray = new boolean[INPUT_NEURONS];
+    // Ожидаемые значения
+    private static final boolean[] expectedOutput = new boolean[OUTPUT_NEURONS];
+    //Веса входного слоя
+    private static final double[] weight_input = new double[INPUT_NEURONS * HIDDEN_LAYER_NEURONS];
+    //Веса скрытого слоя
+    private static final double[] weight_hidden = new double[HIDDEN_LAYER_NEURONS * OUTPUT_NEURONS];
+    //Массив выходных нейронов
+    private static final double[] outputArray = new double[OUTPUT_NEURONS];
+    //Массив скрытых нейронов
+    private static final double[] hiddenArray = new double[HIDDEN_LAYER_NEURONS];
+    //Ошибка
+    private static final double[] outputError = new double[OUTPUT_NEURONS];
+    //Ошибка скрытых нейронов
+    private static final double[] hiddenError = new double[HIDDEN_LAYER_NEURONS];
+
     private double sigmoid(double u) {
         return 1 / (1 + Math.exp(-u));
     }
 
     public void train() {
-        boolean[] inputArray = new boolean[INPUT_NEURONS];
-        
-        // Ожидаемые значения
-        boolean[] expectedOutput = new boolean[OUTPUT_NEURONS];
-
-        //Веса входного слоя
-        double[] weight_input = new double[INPUT_NEURONS * HIDDEN_LAYER_NEURONS];
-        //Веса скрытого слоя
-        double[] weight_hidden = new double[HIDDEN_LAYER_NEURONS * OUTPUT_NEURONS];
 
         int start;
         int end;
         int iterator;
         double sum = 0;
-        //Массив выходных нейронов
-        double[] outputArray = new double[OUTPUT_NEURONS];
-        //Массив скрытых нейронов
-        double[] hiddenArray = new double[HIDDEN_LAYER_NEURONS];
-        //Ошибка 
-        double[] outputError = new double[OUTPUT_NEURONS];
-        //Ошибка скрытых нейронов
-        double[] hiddenError = new double[HIDDEN_LAYER_NEURONS];
 
         for (int i = 0; i < INPUT_NEURONS * HIDDEN_LAYER_NEURONS; i++) {
             weight_input[i] = ThreadLocalRandom.current().nextDouble(-1, 1);
@@ -287,16 +287,15 @@ public class Net {
                 }
             }
         }
+    }
 
-        System.out.print("Обучение завершено. Введите символ. \n");
+    public void predict(boolean[] input) {
+        double sum = 0;
 
-        for (int j = 0; j < INPUT_NEURONS; j++) {
-            //todo set value
-            inputArray[j] = DummyDataset.symbol_9[j];
-        }
+        System.arraycopy(input, 0, inputArray, 0, INPUT_NEURONS);
 
-        start = 0;
-        end = INPUT_NEURONS;
+        int start = 0;
+        int end = INPUT_NEURONS;
 
         for (int j = 0; j < HIDDEN_LAYER_NEURONS; j++) {
             for (int k = start; k < end; k++) {
