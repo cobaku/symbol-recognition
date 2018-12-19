@@ -2,10 +2,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Net {
 
-    private static final short HIDDEN_LAYER_NEURONS = 19;
+    private static final int HIDDEN_LAYER_NEURONS = 19;
     private static final int OUTPUT_NEURONS = DummyDataset.DATASET.size();
     private static final double TEACH_SPEED = 0.2;
-    private static final short INPUT_NEURONS = 35;
+    private static final int INPUT_NEURONS = 35;
+    private static final double REQUIRED_ACCURACY = 0.005;
 
     // Значения на входе
     private boolean[] inputArray = new boolean[INPUT_NEURONS];
@@ -39,8 +40,10 @@ public class Net {
     }
 
     public void train() {
+        int epochCount = 0;
+        boolean repeat = true;
 
-        for (int i = 0; i < 5000; i++) {
+        while (repeat) {
             DummyDataset.DATASET.forEach((symbolName, symbolMap) -> {
                 inputArray = symbolMap;
                 setOutputValue(symbolName);
@@ -111,10 +114,19 @@ public class Net {
                     sum = 0;
                 }
             });
+
+            repeat = repeatTrain();
+            epochCount++;
         }
+
+        System.out.printf("Сеть обучено. Прошло %s эпох \n", epochCount);
     }
 
-    public DummyDataset.SymbolName predict(boolean[] input) {
+    public DummyDataset.SymbolName predictSymbol(boolean[] input) {
+        return outputSymbol(predict(input));
+    }
+
+    private double[] predict(boolean[] input) {
         double sum = 0;
         inputArray = input;
 
@@ -146,7 +158,14 @@ public class Net {
             sum = 0;
         }
 
-        return outputSymbol(outputArray);
+        return outputArray;
+    }
+
+    private boolean repeatTrain() {
+        final DummyDataset.SymbolName randomSymbolForTest = DummyDataset.SymbolName.values()[ThreadLocalRandom.current().nextInt(0, DummyDataset.SymbolName.values().length)];
+        final double[] predict = predict(DummyDataset.DATASET.get(randomSymbolForTest));
+        final int maximumIndexInArray = findMaximumIndexInArray(predict);
+        return 1 - predict[maximumIndexInArray] > REQUIRED_ACCURACY;
     }
 
     private DummyDataset.SymbolName outputSymbol(double[] output) {
