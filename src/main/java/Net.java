@@ -24,11 +24,7 @@ public class Net {
     //Ошибка скрытых нейронов
     private static final double[] hiddenError = new double[HIDDEN_LAYER_NEURONS];
 
-    private double sigmoid(double u) {
-        return 1 / (1 + Math.exp(-u));
-    }
-
-    public void train() {
+    public Net() {
         for (int i = 0; i < INPUT_NEURONS * HIDDEN_LAYER_NEURONS; i++) {
             weight_input[i] = ThreadLocalRandom.current().nextDouble(-1, 1);
         }
@@ -36,6 +32,13 @@ public class Net {
         for (int i = 0; i < OUTPUT_NEURONS * HIDDEN_LAYER_NEURONS; i++) {
             weight_hidden[i] = ThreadLocalRandom.current().nextDouble(-1, 1);
         }
+    }
+
+    private double sigmoid(double u) {
+        return 1 / (1 + Math.exp(-u));
+    }
+
+    public void train() {
 
         for (int i = 0; i < 5000; i++) {
             DummyDataset.DATASET.forEach((symbolName, symbolMap) -> {
@@ -111,10 +114,9 @@ public class Net {
         }
     }
 
-    public void predict(boolean[] input) {
+    public DummyDataset.SymbolName predict(boolean[] input) {
         double sum = 0;
-
-        System.arraycopy(input, 0, inputArray, 0, INPUT_NEURONS);
+        inputArray = input;
 
         int start = 0;
         int end = INPUT_NEURONS;
@@ -144,30 +146,19 @@ public class Net {
             sum = 0;
         }
 
-        inputSymbol(INPUT_NEURONS, inputArray);
-        outputSymbol(OUTPUT_NEURONS, outputArray);
+        return outputSymbol(outputArray);
     }
 
-    private void outputSymbol(int outputNeurons, double[] output) {
+    private DummyDataset.SymbolName outputSymbol(double[] output) {
         System.out.print("\nЗначения на выходных нейронах: \n");
-        for (int j = 0; j < outputNeurons; j++) {
+        for (int j = 0; j < output.length; j++) {
             System.out.printf("Выход №%s. Значение не выходе: %s \n", j, output[j]);
         }
 
         final DummyDataset.SymbolName symbolName = DummyDataset.SymbolName.byNumber(findMaximumIndexInArray(output));
 
         System.out.printf("\nПолученный символ: %s\n", symbolName.name());
-    }
-
-    private void inputSymbol(short inputNeurons, boolean[] input) {
-        System.out.print("Введенный символ:");
-        for (int j = 0; j < inputNeurons; j++) {
-            if (j % 5 == 0) System.out.print("");
-
-            if (input[j]) System.out.print("$");
-
-            else System.out.print(" ");
-        }
+        return symbolName;
     }
 
     private int boolToInt(boolean boolVariable) {
