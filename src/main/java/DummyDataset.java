@@ -1,7 +1,28 @@
+import java.util.HashMap;
+import java.util.Map;
+
 @SuppressWarnings("unused")
 public abstract class DummyDataset {
 
-    public static boolean[] symbol_0 = {
+    public enum SymbolName {
+        ZERO,
+        ONE,
+        TWO,
+        THREE,
+        FOUR,
+        FIVE,
+        A,
+        B,
+        C,
+        D,
+        E;
+
+        public static SymbolName byNumber(int number) {
+            return SymbolName.values()[number];
+        }
+    }
+
+    public static boolean[] ZERO = {
             true, true, true, true, true,
             true, false, false, false, true,
             true, false, false, false, true,
@@ -11,7 +32,7 @@ public abstract class DummyDataset {
             true, true, true, true, true
     };
 
-    public static boolean[] symbol_1 = {
+    public static boolean[] ONE = {
             false, false, false, false, true,
             false, false, false, false, true,
             false, false, false, false, true,
@@ -21,7 +42,7 @@ public abstract class DummyDataset {
             false, false, false, false, true
     };
 
-    public static boolean[] symbol_2 = {
+    public static boolean[] TWO = {
             true, true, true, true, true,
             false, false, false, false, true,
             false, false, false, false, true,
@@ -31,7 +52,7 @@ public abstract class DummyDataset {
             true, true, true, true, true
     };
 
-    public static boolean[] symbol_3 = {
+    public static boolean[] THREE = {
             true, true, true, true, true,
             false, false, false, false, true,
             false, false, false, false, true,
@@ -41,7 +62,7 @@ public abstract class DummyDataset {
             true, true, true, true, true
     };
 
-    public static boolean[] symbol_4 = {
+    public static boolean[] FOUR = {
             true, false, false, false, true,
             true, false, false, false, true,
             true, false, false, false, true,
@@ -51,7 +72,7 @@ public abstract class DummyDataset {
             false, false, false, false, true
     };
 
-    public static boolean[] symbol_5 = {
+    public static boolean[] FIVE = {
             true, true, true, true, true,
             true, false, false, false, false,
             true, false, false, false, false,
@@ -61,47 +82,7 @@ public abstract class DummyDataset {
             true, true, true, true, true
     };
 
-    public static boolean[] symbol_6 = {
-            true, true, true, true, true,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, true, true, true, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, true, true, true, true
-    };
-
-    public static boolean[] symbol_7 = {
-            false, true, true, true, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            false, false, false, false, true
-    };
-
-    public static boolean[] symbol_8 = {
-            true, true, true, true, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, true, true, true, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, true, true, true, true
-    };
-
-    public static boolean[] symbol_9 = {
-            true, true, true, true, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, true, true, true, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            true, true, true, true, true
-    };
-
-    public static boolean[] symbol_A = {
+    public static boolean[] A = {
             true, true, true, true, true,
             true, false, false, false, true,
             true, false, false, false, true,
@@ -111,7 +92,7 @@ public abstract class DummyDataset {
             true, false, false, false, true
     };
 
-    public static boolean[] symbol_B = {
+    public static boolean[] B = {
             true, true, true, true, true,
             true, false, false, false, true,
             true, false, false, false, true,
@@ -121,7 +102,7 @@ public abstract class DummyDataset {
             true, true, true, true, true
     };
 
-    public static boolean[] symbol_C = {
+    public static boolean[] C = {
             true, true, true, true, true,
             true, false, false, false, false,
             true, false, false, false, false,
@@ -131,7 +112,7 @@ public abstract class DummyDataset {
             true, true, true, true, true
     };
 
-    public static boolean[] symbol_D = {
+    public static boolean[] D = {
             true, true, true, true, false,
             true, false, false, false, true,
             true, false, false, false, true,
@@ -141,7 +122,7 @@ public abstract class DummyDataset {
             true, true, true, true, true
     };
 
-    public static boolean[] symbol_E = {
+    public static boolean[] E = {
             true, true, true, true, true,
             true, false, false, false, false,
             true, false, false, false, false,
@@ -151,43 +132,19 @@ public abstract class DummyDataset {
             true, true, true, true, true
     };
 
-    public static boolean[] symbol_F = {
-            true, true, true, true, true,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, true, true, true, true,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, false, false, false, false
-    };
+    public static final Map<SymbolName, boolean[]> DATASET = new HashMap<>();
 
-    public static boolean[] symbol_testD = {
-            true, true, true, true, false,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, false, false, true,
-            true, false, true, false, false
-    };
-
-    public static boolean[] symbol_testC = {
-            true, true, true, true, true,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, false, true, true, true
-    };
-
-    public static boolean[] symbol_test2 = {
-            true, true, true, true, true,
-            false, false, false, false, true,
-            false, false, false, false, true,
-            true, true, true, false, true,
-            true, false, false, false, false,
-            true, false, false, false, false,
-            true, false, true, false, true
-    };
+    static {
+        DATASET.put(SymbolName.ZERO, ZERO);
+        DATASET.put(SymbolName.ONE, ONE);
+        DATASET.put(SymbolName.TWO, TWO);
+        DATASET.put(SymbolName.THREE, THREE);
+        DATASET.put(SymbolName.FOUR, FOUR);
+        DATASET.put(SymbolName.FIVE, FIVE);
+        DATASET.put(SymbolName.A, A);
+        DATASET.put(SymbolName.B, B);
+        DATASET.put(SymbolName.C, C);
+        DATASET.put(SymbolName.D, D);
+        DATASET.put(SymbolName.E, E);
+    }
 }

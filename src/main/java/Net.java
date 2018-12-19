@@ -3,9 +3,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Net {
 
     private static final short HIDDEN_LAYER_NEURONS = 19;
-    private static final short OUTPUT_NEURONS = 4;
+    private static final int OUTPUT_NEURONS = DummyDataset.DATASET.size();
     private static final double TEACH_SPEED = 0.2;
-    private static final short KNOWN_SYMBOLS_COUNT = 16;
     private static final short INPUT_NEURONS = 35;
 
     // Значения на входе
@@ -30,12 +29,6 @@ public class Net {
     }
 
     public void train() {
-
-        int start;
-        int end;
-        int iterator;
-        double sum = 0;
-
         for (int i = 0; i < INPUT_NEURONS * HIDDEN_LAYER_NEURONS; i++) {
             weight_input[i] = ThreadLocalRandom.current().nextDouble(-1, 1);
         }
@@ -45,185 +38,14 @@ public class Net {
         }
 
         for (int i = 0; i < 5000; i++) {
-            for (int n = 0; n < KNOWN_SYMBOLS_COUNT; n++) {
-                switch (n) {
-                    case 0: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_0[s];
-                            expectedOutput[0] = false;
-                            expectedOutput[1] = false;
-                            expectedOutput[2] = false;
-                            expectedOutput[3] = false;
-                        }
+            DummyDataset.DATASET.forEach((symbolName, symbolMap) -> {
+                inputArray = symbolMap;
+                setOutputValue(symbolName);
 
-                        break;
-                    }
-                    case 1: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_1[s];
-                            expectedOutput[0] = false;
-                            expectedOutput[1] = false;
-                            expectedOutput[2] = false;
-                            expectedOutput[3] = true;
-                        }
-
-                        break;
-                    }
-                    case 2: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_2[s];
-                            expectedOutput[0] = false;
-                            expectedOutput[1] = false;
-                            expectedOutput[2] = true;
-                            expectedOutput[3] = false;
-                        }
-
-                        break;
-                    }
-                    case 3: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_3[s];
-                            expectedOutput[0] = false;
-                            expectedOutput[1] = false;
-                            expectedOutput[2] = true;
-                            expectedOutput[3] = true;
-                        }
-
-                        break;
-                    }
-                    case 4: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_4[s];
-                            expectedOutput[0] = false;
-                            expectedOutput[1] = true;
-                            expectedOutput[2] = false;
-                            expectedOutput[3] = false;
-                        }
-
-                        break;
-                    }
-                    case 5: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_5[s];
-                            expectedOutput[0] = false;
-                            expectedOutput[1] = true;
-                            expectedOutput[2] = false;
-                            expectedOutput[3] = true;
-                        }
-
-                        break;
-                    }
-                    case 6: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_6[s];
-                            expectedOutput[0] = false;
-                            expectedOutput[1] = true;
-                            expectedOutput[2] = true;
-                            expectedOutput[3] = false;
-                        }
-
-                        break;
-                    }
-                    case 7: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_7[s];
-                            expectedOutput[0] = false;
-                            expectedOutput[1] = true;
-                            expectedOutput[2] = true;
-                            expectedOutput[3] = true;
-                        }
-
-                        break;
-                    }
-                    case 8: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_8[s];
-                            expectedOutput[0] = true;
-                            expectedOutput[1] = false;
-                            expectedOutput[2] = false;
-                            expectedOutput[3] = false;
-                        }
-
-                        break;
-                    }
-                    case 9: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_9[s];
-                            expectedOutput[0] = true;
-                            expectedOutput[1] = false;
-                            expectedOutput[2] = false;
-                            expectedOutput[3] = true;
-                        }
-
-                        break;
-                    }
-                    case 10: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_A[s];
-                            expectedOutput[0] = true;
-                            expectedOutput[1] = false;
-                            expectedOutput[2] = true;
-                            expectedOutput[3] = false;
-                        }
-
-                        break;
-                    }
-                    case 11: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_B[s];
-                            expectedOutput[0] = true;
-                            expectedOutput[1] = false;
-                            expectedOutput[2] = true;
-                            expectedOutput[3] = true;
-                        }
-
-                        break;
-                    }
-                    case 12: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_C[s];
-                            expectedOutput[0] = true;
-                            expectedOutput[1] = true;
-                            expectedOutput[2] = false;
-                            expectedOutput[3] = false;
-                        }
-
-                        break;
-                    }
-                    case 13: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_D[s];
-                            expectedOutput[0] = true;
-                            expectedOutput[1] = true;
-                            expectedOutput[2] = false;
-                            expectedOutput[3] = true;
-                        }
-
-                        break;
-                    }
-                    case 14: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_E[s];
-                            expectedOutput[0] = true;
-                            expectedOutput[1] = true;
-                            expectedOutput[2] = true;
-                            expectedOutput[3] = false;
-                        }
-
-                        break;
-                    }
-                    case 15: {
-                        for (int s = 0; s < INPUT_NEURONS; s++) {
-                            inputArray[s] = DummyDataset.symbol_F[s];
-                            expectedOutput[0] = true;
-                            expectedOutput[1] = true;
-                            expectedOutput[2] = true;
-                            expectedOutput[3] = true;
-                        }
-
-                        break;
-                    }
-                }
+                int start;
+                int end;
+                int iterator;
+                double sum = 0;
 
                 start = 0;
 
@@ -285,7 +107,7 @@ public class Net {
                     end += INPUT_NEURONS;
                     sum = 0;
                 }
-            }
+            });
         }
     }
 
@@ -326,70 +148,18 @@ public class Net {
         outputSymbol(OUTPUT_NEURONS, outputArray);
     }
 
-    private static void outputSymbol(short outputNeurons, double[] output) {
+    private void outputSymbol(int outputNeurons, double[] output) {
         System.out.print("\nЗначения на выходных нейронах: \n");
         for (int j = 0; j < outputNeurons; j++) {
-            System.out.print(output[j] + " ");
+            System.out.printf("Выход №%s. Значение не выходе: %s \n", j, output[j]);
         }
 
-        System.out.print("\n<=#=><=#=><=#=>\n\n");
-        System.out.print("\nПолученный символ: \n");
-        if (output[0] < 0.2) {
-            if (output[1] < 0.2) {
-                if (output[2] < 0.2) {
-                    if (output[3] < 0.2)
-                        System.out.print("It's 0 \n");
-                    else if (output[3] >= 0.8)
-                        System.out.print("It's 1 \n");
-                } else if (output[2] >= 0.8) {
-                    if (output[3] < 0.2)
-                        System.out.print("It's 2 \n");
-                    else if (output[3] >= 0.8)
-                        System.out.print("It's 3 \n");
-                }
-            } else if (output[1] >= 0.8) {
-                if (output[2] < 0.2) {
-                    if (output[3] < 0.2)
-                        System.out.print("It's 4 \n");
-                    else if (output[3] >= 0.8)
-                        System.out.print("It's 5 \n");
-                } else if (output[2] >= 0.8) {
-                    if (output[3] < 0.2)
-                        System.out.print("It's 6 \n");
-                    else if (output[3] >= 0.8)
-                        System.out.print("It's 7 \n");
-                }
-            }
-        } else if (output[0] >= 0.8) {
-            if (output[1] < 0.2) {
-                if (output[2] < 0.2) {
-                    if (output[3] < 0.2)
-                        System.out.print("It's 8 \n");
-                    else if (output[3] >= 0.8)
-                        System.out.print("It's 9 \n");
-                } else if (output[2] >= 0.8) {
-                    if (output[3] < 0.2)
-                        System.out.print("It's A \n");
-                    else if (output[3] >= 0.8)
-                        System.out.print("It's B \n");
-                }
-            } else if (output[1] >= 0.8) {
-                if (output[2] < 0.2) {
-                    if (output[3] < 0.2)
-                        System.out.print("It's C \n");
-                    else if (output[3] >= 0.8)
-                        System.out.print("It's D \n");
-                } else if (output[2] >= 0.8) {
-                    if (output[3] < 0.2)
-                        System.out.print("It's E \n");
-                    else if (output[3] >= 0.8)
-                        System.out.print("It's F \n");
-                }
-            }
-        }
+        final DummyDataset.SymbolName symbolName = DummyDataset.SymbolName.byNumber(findMaximumIndexInArray(output));
+
+        System.out.printf("\nПолученный символ: %s\n", symbolName.name());
     }
 
-    private static void inputSymbol(short inputNeurons, boolean[] input) {
+    private void inputSymbol(short inputNeurons, boolean[] input) {
         System.out.print("Введенный символ:");
         for (int j = 0; j < inputNeurons; j++) {
             if (j % 5 == 0) System.out.print("");
@@ -400,7 +170,25 @@ public class Net {
         }
     }
 
-    private static int boolToInt(boolean boolVariable) {
+    private int boolToInt(boolean boolVariable) {
         return boolVariable ? 1 : 0;
+    }
+
+    private void setOutputValue(DummyDataset.SymbolName symbolName) {
+        for (int i = 0; i < expectedOutput.length; i++) {
+            expectedOutput[i] = false;
+        }
+
+        expectedOutput[symbolName.ordinal()] = true;
+    }
+
+    private static int findMaximumIndexInArray(double[] array) {
+        int maxAt = 0;
+
+        for (int i = 0; i < array.length; i++) {
+            maxAt = array[i] > array[maxAt] ? i : maxAt;
+        }
+
+        return maxAt;
     }
 }
